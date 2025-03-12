@@ -1,0 +1,500 @@
+   <Table
+                                            //  exportFile={true}
+                                            //  importFile={true}
+                                            isSuccess={true}
+                                            isLoading={false}
+                                            // errorMassage={{}}
+                                            top={100}
+                                            scrollRole={true}
+                                            // editRole=
+                                            // localEdit={false}
+                                            localDelete={true}
+                                            localFunction={true}
+                                            // extraButton={(item: any) => {
+                                            //     return <div className='d-flex gap-1'>
+                                            //         <div className="btn-group" role="group" aria-label="Basic example">
+                                            //             <button type="button" className="btn btn-danger btn-sm"
+                                            //                 onClick={() => {
+                                            //                     setClientValue(() => {
+                                            //                         return clinetValue?.map((res: any) => {
+                                            //                             if (res?.id == item?.id) {
+                                            //                                 return {
+                                            //                                     ...res,
+                                            //                                     qty: res?.qty > 1 ? res?.qty - 1 : 1
+                                            //                                 }
+                                            //                             }
+                                            //                             return res
+                                            //                         })
+                                            //                     })
+                                            //                 }}
+
+                                            //             >-</button>
+                                            //             <button type="button" className="btn  btn-sm">{
+                                            //                 item?.qty ?? 1
+                                            //             }</button>
+                                            //             <button type="button"
+                                            //                 //  disabled={item?.status == 'old' ? true : false}
+                                            //                 className="btn btn-success btn-sm"
+                                            //                 onClick={() => {
+                                            //                     setClientValue(() => {
+                                            //                         return clinetValue?.map((res: any) => {
+                                            //                             if (res?.id == item?.id) {
+                                            //                                 return {
+                                            //                                     ...res,
+                                            //                                     qty: (res?.qty ?? 1) + 1
+                                            //                                 }
+                                            //                             }
+                                            //                             return res
+                                            //                         })
+                                            //                     })
+
+                                            //                 }}
+
+
+                                            //             >+</button>
+                                            //         </div>
+                                            //         <button className=" btn btn-sm btn-danger"
+                                            //             type='button'
+                                            //             disabled={data?.id > 0 ? (data?.client_value?.find((res: any) => res?.service_id == item?.service_id) ? true : false) : false}
+                                            //             onClick={() => {
+                                            //                 console.log(item);
+
+                                            //                 Swal.fire({
+                                            //                     title: "Ma'lumotni o'chirasizmi?",
+                                            //                     showDenyButton: true,
+                                            //                     showCancelButton: true,
+                                            //                     confirmButtonText: 'Ha',
+                                            //                     denyButtonText: `Yo'q`,
+                                            //                 }).then((result: any) => {
+                                            //                     if (result.isConfirmed) {
+                                            //                         setClientValue(() => clinetValue?.filter((res: any) => res.id != item.id))
+
+                                            //                         setSelectData({
+                                            //                             ...selectData,
+                                            //                             service_id: selectData.service_id.filter((res: any) => res.value != item.id)
+                                            //                         })
+                                            //                         Swal.fire({
+                                            //                             position: 'top-end',
+                                            //                             icon: 'success',
+                                            //                             title: "Malumot o'chirildi",
+                                            //                             showConfirmButton: false,
+                                            //                             timer: 2500
+                                            //                         })
+                                            //                     }
+                                            //                 })
+                                            //             }}
+
+                                            //         >
+                                            //             <MdDeleteForever />
+                                            //         </button>
+                                            //     </div>
+                                            // }}
+                                            // extraButtonRole={true}
+                                            // deleteLocalFunction={
+                                            //     (id: any, item: any) => {
+                                            //         setClientValue(() => clinetValue?.filter((res: any) => res.id != id))
+
+                                            //         setSelectData({
+                                            //             ...selectData,
+                                            //             service_id: selectData.service_id.filter((res: any) => res.value != id)
+                                            //         })
+
+                                            //     }
+                                            // }
+                                            // deleteRole={true}
+                                            extraKeys={["department_",
+                                                //  "servicetype_",
+                                                'count_',
+                                                "price_",
+                                                "who_",
+                                            ]}
+                                            columns={[
+                                                {
+                                                    title: '№',
+                                                    key: 'id',
+                                                    renderItem: (value: any, target: any) => {
+
+                                                        let result = 'danger' as any;
+                                                        if (+target?.is_active && (+totalCalc(target) - chegirmaHisobla(target) - +target?.pay_price) == 0) {
+                                                            result = 'success'
+                                                        } else if (+target?.is_active && (+totalCalc(target) - chegirmaHisobla(target) - +target?.pay_price) != 0 && +target?.pay_price > 0) {
+                                                            result = 'info'
+                                                        } else if (+target?.is_active && target?.pay_price == 0) {
+                                                            result = 'warning'
+                                                        }
+                                                        return <td key={target.index} className={` p-1 bg-${result} text-white  h-100 `}>
+                                                            {/* // return <td key={target.index} className={` p-1  ${+data?.id ? (+data?.is_pay ? (+target?.is_active ? (target?.qty * target?.price - target?.pay_price == 0 ? 'bg-success text-white' : 'bg-warning text-white') : (target?.status == 'old' ? 'bg-danger text-white' : 'bg-warning text-white')) : (target?.status == 'old' ? 'bg-warning text-white' : 'bg-warning text-white')) : ''}  h-100 `}> */}
+                                                            <span>
+                                                                {target.index + 1}
+
+                                                            </span>
+                                                        </td>
+
+                                                    },
+                                                },
+                                                {
+                                                    title: "Xizmat ",
+                                                    key: 'department_',
+                                                    render: (value: any, data: any) => {
+
+                                                        return <>
+                                                            {value?.name}
+                                                        </>
+                                                    }
+                                                },
+                                                {
+                                                    title: "Xizmat ",
+                                                    key: 'count_',
+                                                    renderItem: (item: any) => {
+
+                                                        return
+                                                        <td className='d-flex gap-1'>
+
+                                                            <div className="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button"
+                                                                    disabled={item.status == 'old'}
+                                                                    className="btn btn-danger btn-sm"
+                                                                    onClick={() => {
+                                                                        setClientValue(() => {
+                                                                            return clinetValue?.map((res: any) => {
+                                                                                if (res?.id == item?.id) {
+                                                                                    return {
+                                                                                        ...res,
+                                                                                        qty: res?.qty > 1 ? res?.qty - 1 : 1
+                                                                                    }
+                                                                                }
+                                                                                return res
+                                                                            })
+                                                                        })
+                                                                    }}
+
+                                                                >-</button>
+                                                                <input type="number" className='form-control' width={20} name=""
+                                                                    value={item?.qty || 1}
+                                                                    min={1}
+                                                                    onChange={(e: any) => {
+                                                                        if (e.target.value > 1) {
+                                                                            setClientValue(() => {
+                                                                                return clinetValue?.map((res: any) => {
+                                                                                    if (res?.id == item?.id) {
+                                                                                        return {
+                                                                                            ...res,
+                                                                                            qty: e.target.value
+                                                                                        }
+                                                                                    }
+                                                                                    return res
+                                                                                })
+                                                                            })
+                                                                        }
+                                                                    }}
+                                                                    id="" />
+
+                                                                {/* <button type="button" className="btn  btn-sm">{
+                                                                    (item?.qty || 1)
+                                                                }</button> */}
+                                                                <button type="button"
+                                                                    //  disabled={item?.status == 'old' ? true : false}
+                                                                    disabled={item.status == 'old'}
+
+                                                                    className="btn btn-success btn-sm"
+                                                                    onClick={() => {
+                                                                        setClientValue(() => {
+                                                                            return clinetValue?.map((res: any) => {
+                                                                                if (res?.id == item?.id) {
+                                                                                    return {
+                                                                                        ...res,
+                                                                                        qty: (res?.qty ?? 1) + 1
+                                                                                    }
+                                                                                }
+                                                                                return res
+                                                                            })
+                                                                        })
+
+                                                                    }}
+
+
+                                                                >+</button>
+                                                            </div>
+
+                                                            {
+                                                                item.status == 'old' ?
+                                                                    <div className="form-check d-flex justify-content-center">
+                                                                        <input className="form-check-input" type="checkbox" id="defaultCheck1"
+                                                                            checked={+item?.is_active ? true : false}
+                                                                            onChange={(e: any) => {
+                                                                                setActiveTab2(0)
+                                                                                setClientValue(() => {
+                                                                                    return clinetValue?.map((res: any) => {
+                                                                                        if (res?.id == item?.id) {
+                                                                                            return {
+                                                                                                ...res,
+                                                                                                is_active: e?.target?.checked ? 1 : 0
+                                                                                            }
+                                                                                        }
+                                                                                        return res
+                                                                                    })
+                                                                                })
+                                                                            }}
+                                                                        />
+                                                                    </div> : <button className=" btn btn-sm btn-danger"
+                                                                        type='button'
+                                                                        disabled={item.status == 'old'}
+                                                                        // disabled={data?.id > 0 ? (data?.client_value?.find((res: any) => res?.service_id == item?.service_id) ? true : false) : false}
+                                                                        onClick={() => {
+                                                                            console.log(item);
+                                                                            Swal.fire({
+                                                                                title: "Ma'lumotni o'chirasizmi?",
+                                                                                showDenyButton: true,
+                                                                                showCancelButton: true,
+                                                                                confirmButtonText: 'Ha',
+                                                                                denyButtonText: `Yo'q`,
+                                                                            }).then((result: any) => {
+                                                                                if (result.isConfirmed) {
+                                                                                    setClientValue(() => clinetValue?.filter((res: any) => res.id != item.id))
+                                                                                    if (+user?.setting?.is_reg_monoblok) {
+                                                                                        setServiceIdData(() => serviceIdData?.filter((res: any) => res.id != item.service_id))
+                                                                                        setSelectData({
+                                                                                            ...selectData,
+                                                                                            service_id: selectData.service_id.filter((res: any) => res.value != item?.service_id)
+                                                                                        })
+                                                                                        let depIdFind = selectData.service_id?.filter((item: any) => item?.department?.id == item?.department?.id)
+                                                                                        console.log('depIdFind', depIdFind);
+
+                                                                                        if (depIdFind?.length <= 1) {
+                                                                                            setQueueNumberData(() => queueNumberData?.filter((res: any) => new Set([item?.department?.id]).has(res?.department?.id)))
+                                                                                        }
+                                                                                    } else {
+                                                                                        let depIdFind = selectData.service_id?.filter((item: any) => item?.department?.id == item?.department?.id)
+                                                                                        console.log('depIdFind', depIdFind);
+
+                                                                                        if (depIdFind?.length <= 1) {
+                                                                                            setQueueNumberData(() => queueNumberData?.filter((res: any) => new Set([item?.department?.id]).has(res?.department?.id)))
+                                                                                        }
+                                                                                        setSelectData({
+                                                                                            ...selectData,
+                                                                                            service_id: selectData.service_id.filter((res: any) => res.value != item?.service_id)
+                                                                                        })
+                                                                                    }
+                                                                                    setActiveTab2('0')
+                                                                                    setCashRegObj(() => ({ pay_total_price: 0, discount: 0, debt_price: 0 }))
+                                                                                    setNumberData(() => ({ payment_deadline: 0, debt_comment: '', discount_comment: '' }))
+                                                                                    Swal.fire({
+                                                                                        position: 'top-end',
+                                                                                        icon: 'success',
+                                                                                        title: "Malumot o'chirildi",
+                                                                                        showConfirmButton: false,
+                                                                                        timer: 2500
+                                                                                    })
+                                                                                }
+                                                                            })
+                                                                        }}
+
+                                                                    >
+                                                                        <MdDeleteForever />
+                                                                    </button>
+                                                            }
+
+                                                        </td>
+                                                    }
+                                                },
+                                                // {
+                                                //     title: 'Xizmat turi',
+                                                //     key: 'servicetype_',
+                                                //     render: (value: any, data: any) => {
+                                                //         return value?.servicetype?.type
+                                                //     }
+                                                // },
+
+                                                {
+                                                    title: 'Narxi',
+                                                    key: 'price_',
+                                                    render: (value: any, data: any) => {
+                                                        return <NumericFormat displayType="text"
+                                                            thousandSeparator
+                                                            decimalScale={2}
+                                                            value={value?.price ?? 0} />
+                                                    }
+                                                },
+                                                {
+                                                    title: 'Kim tomonidan',
+                                                    key: 'who_',
+                                                    render: (value: any, data: any) => {
+                                                        return `Qabulxona: ${masulRegUchunFullName(value?.owner ?? user)}`
+                                                    }
+                                                },
+                                            ]}
+                                            dataSource={
+                                                clinetValue
+                                            }
+                                        />
+
+
+
+
+                                          <Table
+                                isSuccess={true}
+                                isLoading={false}
+                                top={100}
+                                scrollRole={true}
+                                extraKeys={["servicetype_", "price_", "count_", "total_", 'discount_',
+                                    'doctor_'
+                                ]}
+                                columns={[
+                                    {
+                                        title: '№',
+                                        key: 'id',
+                                        renderItem: (value: any, target: any) => {
+                                            return <td key={target.index} className={` p-1  ${+target?.is_active ? (target?.total_price == target?.pay_price ? 'bg-success text-white' : target?.total_price != target?.pay_price && target?.pay_price > 0 ? 'bg-info text-white' : 'bg-warning text-white') : 'bg-danger text-white'}  h-100 `}>
+                                                <span>
+                                                    {target.index + 1}
+
+                                                </span>
+                                            </td>
+
+                                        },
+                                    },
+                                    {
+                                        title: 'Xizmat turi',
+                                        key: 'servicetype_',
+                                        render: (value: any, data: any) => {
+                                            return value?.service?.name ?? value?.name
+                                        }
+                                    },
+
+                                    {
+                                        title: 'Narxi',
+                                        key: 'price_',
+                                        render: (value: any, data: any) => {
+                                            return <>
+                                                <NumericFormat displayType="text"
+                                                    thousandSeparator
+                                                    decimalScale={2}
+                                                    value={value?.price ?? 0} />
+                                            </>
+                                        }
+                                    },
+                                    {
+                                        title: 'soni',
+                                        key: 'count_',
+                                        render: (value: any, data: any) => {
+                                            return <>
+
+                                                <NumericFormat displayType="text"
+                                                    thousandSeparator
+                                                    decimalScale={2}
+                                                    value={value?.qty ?? 1} />
+
+                                            </>
+                                        }
+                                    },
+                                    {
+                                        title: 'Jami',
+                                        key: 'total_',
+                                        render: (value: any, data: any) => {
+                                            return <>
+
+                                                <NumericFormat displayType="text"
+                                                    thousandSeparator
+                                                    decimalScale={2}
+                                                    value={(value?.price ?? 0) * (value?.qty ?? 1)} />
+                                            </>
+                                        }
+                                    },
+                                    {
+                                        title: 'Chegirma',
+                                        key: 'discount_',
+                                        renderItem: (value: any, data: any) => {
+                                            let chegirma = value?.discount ?? 0
+
+                                            if (chegirma <= 100) {
+                                                chegirma = ((value?.total_price) / 100) * chegirma
+                                            }
+                                            else {
+                                                chegirma = chegirma
+                                            }
+                                            return <td style={{
+                                                width: '10rem'
+                                            }}  >
+                                                <div className="input-group ">
+                                                    <NumericFormat
+                                                        readOnly={+value?.is_active && value?.edit ? false : true}
+                                                        className='form-control w-50'
+                                                        thousandSeparator
+                                                        decimalScale={2}
+                                                        onChange={(e: any) => {
+                                                            let price = +e.target.value.replace(/,/g, '')
+                                                            setClintCopyValue(() => clintCopyValue?.map((res: any) => {
+                                                                if (res?.id == value?.id) {
+                                                                    return {
+                                                                        ...res,
+                                                                        discount: price
+                                                                    }
+                                                                }
+                                                                return res
+                                                            }))
+
+
+                                                        }}
+
+                                                        value={value?.discount}
+
+                                                    />
+                                                    <button className='btn btn-info btn-sm'
+
+                                                        onClick={() => {
+                                                            setClintCopyValue(() => clintCopyValue?.map((res: any) => {
+                                                                if (res?.id == value?.id) {
+                                                                    return {
+                                                                        ...res,
+                                                                        edit: !value?.edit
+                                                                    }
+                                                                }
+                                                                return res
+                                                            }))
+                                                        }}
+                                                    >
+                                                        <AiFillEdit />
+                                                    </button>
+                                                </div>
+
+                                            </td>
+                                        }
+                                    },
+                                    {
+                                        title: 'Foydalanuvchilar',
+                                        key: 'doctor_',
+                                        renderItem: (value: any, data: any) => {
+                                            return <td  >
+                                                <select {...register('discount_comment')} name='discount_comment' className="form-control" id=""
+                                                    disabled={+data?.discount_price > 0 ? true : false}
+                                                    required={+getValues('discount') > 0 ? true : false}
+                                                >
+                                                    <option value="">Tanlang</option>
+                                                    <option value="Kam ta'minlangan">Kam ta'minlangan</option>
+                                                    <option value="Direktor tanishi">Direktor tanishi</option>
+                                                    <option value="Nogironligi mavjud">Nogironligi mavjud</option>
+                                                    <option value="Doimiy mijoz">Doimiy mijoz</option>
+
+                                                </select>
+
+                                            </td>
+                                        }
+                                    },
+                                    // {
+                                    //     title: 'Izoh',
+                                    //     key: 'comment_',
+                                    //     render: (value: any, data: any) => {
+                                    //         return <>
+
+                                    //             <NumericFormat displayType="text"
+                                    //                 thousandSeparator
+                                    //                 decimalScale={2}
+                                    //                 value={(value?.price ?? 0) * (value?.qty ?? 1)} />
+                                    //         </>
+                                    //     }
+                                    // },
+                                ]}
+                                dataSource={
+                                    clintCopyValue
+                                }
+                            />
